@@ -6,20 +6,32 @@
     android:orientation="vertical">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:background="#75cfacac"
+        android:layout_weight="1"
+        android:background="#7560c4f2"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="用户名：" />
+            android:text="用户名："
+            android:textSize="@dimen/account_fount_size" />
 
         <TextView
             android:id="@+id/content_account_username"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/account_fount_size" />
+
+        <Button
+            android:id="@+id/content_account_username_copy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="3.0dip"
+            android:text="复制"
+            android:textSize="@dimen/account_fount_size" />
     </LinearLayout>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -31,12 +43,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="登录名：" />
+            android:text="登录名："
+            android:textSize="@dimen/account_fount_size" />
 
         <TextView
             android:id="@+id/content_account_loginname"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/account_fount_size" />
     </LinearLayout>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -48,12 +62,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="登录密码：" />
+            android:text="登录密码："
+            android:textSize="@dimen/account_fount_size" />
 
         <TextView
             android:id="@+id/content_account_password"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/account_fount_size" />
     </LinearLayout>
 
 
