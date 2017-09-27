@@ -1,2 +1,4 @@
 # Shield
-android 密码管理器
+APP name:金盾密保
+author: PerkinsZhu
+description: android 个人密码管理器
