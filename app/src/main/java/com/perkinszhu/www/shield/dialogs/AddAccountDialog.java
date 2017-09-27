@@ -15,6 +15,10 @@ import com.perkinszhu.www.shield.adapters.AccountAdapter;
 import com.perkinszhu.www.shield.adapters.AccountGroupAdapter;
 import com.perkinszhu.www.shield.bean.Account;
 
+import org.apache.commons.lang.RandomStringUtils;
+
+import java.util.UUID;
+
 /**
  * Created with IntelliJ IDEA.
  * Description:
@@ -24,7 +28,8 @@ import com.perkinszhu.www.shield.bean.Account;
  */
 public class AddAccountDialog {
     private static String TAG = AddAccountDialog.class.getName();
-    public void add() {
+
+    public void addOrEdit(Account account) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(AccountActivity.accountActivity);
         final AlertDialog dialog = builder.create();
@@ -38,7 +43,14 @@ public class AddAccountDialog {
         final EditText desc = (EditText) view.findViewById(R.id.et_account_desc);
         Button btnOK = (Button) view.findViewById(R.id.add_account_btn_ok);
         Button btnCancel = (Button) view.findViewById(R.id.add_account_btn_cancel);
+        Button btnCreatePassWord = (Button) view.findViewById(R.id.add_account_btn_createpassword);
 
+        if (account != null) {
+            userName.setText(account.getUserName());
+            loginName.setText(account.getLoginName());
+            passWord.setText(account.getPassWord());
+            desc.setText(account.getDesc());
+        }
         btnOK.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -49,7 +61,11 @@ public class AddAccountDialog {
                 String descStr = desc.getText().toString();
 
                 if (!(TextUtils.isEmpty(userNameStr) || TextUtils.isEmpty(loginNameStr) || TextUtils.isEmpty(passWordStr))) {
-                    AccountAdapter.instance().addAccount(new Account(loginNameStr, passWordStr, userNameStr,descStr));
+                    if (account != null) {
+                        AccountAdapter.instance().update(new Account(loginNameStr, passWordStr, userNameStr, descStr));
+                    } else {
+                        AccountAdapter.instance().addAccount(new Account(loginNameStr, passWordStr, userNameStr, descStr));
+                    }
                     dialog.dismiss();
                 } else {
                     Toast.makeText(MainActivity.mainActivity, "所有内容不能为空!", Toast.LENGTH_SHORT).show();
@@ -63,7 +79,17 @@ public class AddAccountDialog {
                 dialog.dismiss();
             }
         });
+        btnCreatePassWord.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                passWord.setText(createPassWord());
+            }
+        });
         dialog.setCanceledOnTouchOutside(false);
         dialog.show();
+    }
+
+    private String createPassWord() {
+        return RandomStringUtils.randomAscii(10);
     }
 }

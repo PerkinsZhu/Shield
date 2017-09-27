@@ -1,10 +1,5 @@
 package com.perkinszhu.www.shield.tool;
 
-import android.util.Log;
-
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
-
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
@@ -34,7 +29,6 @@ public class EncryptTool {
         if (tempKey.length() == 16) {
             key = tempKey;
         }
-        Log.i(TAG, "---KEYSIZE:" + key.length());
     }
 
     private static String formateKey(String key) {
@@ -55,14 +49,13 @@ public class EncryptTool {
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
             byte[] raw = key.getBytes();
             SecretKeySpec skeySpec = new SecretKeySpec(raw, "AES");
-            IvParameterSpec iv = new IvParameterSpec(ivParameter.getBytes());// 使用CBC模式，需要一个向量iv，可增加加密算法的强度
+            IvParameterSpec iv = new IvParameterSpec(ivParameter.getBytes());
             cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv);
             byte[] encrypted = cipher.doFinal(sSrc.getBytes("utf-8"));
             result = new BASE64Encoder().encode(encrypted);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        // 此处使用BASE64做转码。
         return result;
 
     }
@@ -78,7 +71,7 @@ public class EncryptTool {
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
             IvParameterSpec iv = new IvParameterSpec(ivParameter.getBytes());
             cipher.init(Cipher.DECRYPT_MODE, skeySpec, iv);
-            byte[] encrypted1 = new BASE64Decoder().decodeBuffer(sSrc);// 先用base64解密
+            byte[] encrypted1 = new BASE64Decoder().decodeBuffer(sSrc);
             byte[] original = cipher.doFinal(encrypted1);
             String originalString = new String(original, "utf-8");
             return originalString;

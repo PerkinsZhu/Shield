@@ -1,17 +1,15 @@
 package com.perkinszhu.www.shield;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
 import com.perkinszhu.www.shield.adapters.AccountAdapter;
 import com.perkinszhu.www.shield.adapters.AccountGroupAdapter;
-import com.perkinszhu.www.shield.bean.AccountGroup;
 import com.perkinszhu.www.shield.dialogs.AddAccountDialog;
 
 /**
@@ -36,6 +34,12 @@ public class AccountActivity extends Activity {
         setContentView(R.layout.activity_account_views);
         ListView accountLists = (ListView) findViewById(R.id.account_item);
         accountLists.setAdapter(AccountAdapter.instance());
+        accountLists.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                AccountAdapter.instance().showPassword(view,position);
+            }
+        });
         loadAddAccount();
 
     }
@@ -51,6 +55,6 @@ public class AccountActivity extends Activity {
     }
 
     private void addAccount() {
-        new AddAccountDialog().add();
+        new AddAccountDialog().addOrEdit(null);
     }
 }

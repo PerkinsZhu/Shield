@@ -2,18 +2,13 @@ package com.perkinszhu.www.shield.loader;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.perkinszhu.www.shield.AccountActivity;
 import com.perkinszhu.www.shield.MainActivity;
-import com.perkinszhu.www.shield.R;
-import com.perkinszhu.www.shield.adapters.AccountAdapter;
 import com.perkinszhu.www.shield.adapters.AccountGroupAdapter;
-import com.perkinszhu.www.shield.bean.AccountGroup;
 
 /**
  * Created with IntelliJ IDEA.
@@ -28,13 +23,11 @@ public class AccountGroupLoader {
 
     public void load(ListView accountGroupView) {
         this.accountGroupView = accountGroupView;
-        //TODO 加载内容
         AccountGroupAdapter accountGroupAdapter = new AccountGroupAdapter();
         accountGroupView.setAdapter(accountGroupAdapter);
         accountGroupView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                 showAccounts(position);
             }
         });

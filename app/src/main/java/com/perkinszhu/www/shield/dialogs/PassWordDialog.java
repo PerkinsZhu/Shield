@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.perkinszhu.www.shield.MainActivity;
 import com.perkinszhu.www.shield.R;
 import com.perkinszhu.www.shield.ShieldConfig;
+import com.perkinszhu.www.shield.adapters.AccountGroupAdapter;
 import com.perkinszhu.www.shield.tool.EncryptTool;
 import com.perkinszhu.www.shield.tool.FileTool;
 
@@ -26,14 +27,14 @@ import java.io.IOException;
  * Created with IntelliJ IDEA.
  * Description:
  * User: PerkinsZhu
- * Date: 2017-09-25
- * Time: 16:19
+ * Date: 2017-09-27
+ * Time: 12:04
  */
-public class LoginDialog {
+public class PassWordDialog {
     private static String DATA_FILE_URI = ShieldConfig.FILE_HOME + "shutdown.dll";
     private String TAG = LoginDialog.class.getName();
 
-    public void login() {
+    public void edit() {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.mainActivity);
         final AlertDialog dialog = builder.create();
 
@@ -41,12 +42,10 @@ public class LoginDialog {
         dialog.setView(view, 0, 0, 0, 0);
 
         final EditText etPassword = (EditText) view.findViewById(R.id.et_password);
-        etPassword.setHint(new SpannedString("请输入密码"));
+        etPassword.setHint(new SpannedString("请输入新密码"));
         Button btnOK = (Button) view.findViewById(R.id.btn_ok);
         Button btnCancel = (Button) view.findViewById(R.id.btn_cancel);
-
         btnOK.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 String password = etPassword.getText().toString();
@@ -54,21 +53,10 @@ public class LoginDialog {
                     String MD5data = new String(Hex.encodeHex(DigestUtils.md5(password)));
                     Log.i(TAG, DATA_FILE_URI);
                     try {
-                        String fileData = FileTool.readFileSdcardFile(DATA_FILE_URI);
-                        Log.i(TAG, "密文：" + fileData + "新密文：" + MD5data);
-                        if (fileData.length() == 0) {
-                            FileTool.writeFileSdcardFile(DATA_FILE_URI, MD5data, false);
-                            ok(password);
-                        } else {
-                            if (MD5data.equals(fileData)) {
-                                ok(password);
-                            } else {
-                                Log.i(TAG, "密码错误，系统退出!");
-                                Toast.makeText(MainActivity.mainActivity, "密码错误，系统退出!", Toast.LENGTH_SHORT).show();
-                                System.exit(0);
-                            }
-                        }
-
+                        FileTool.writeFileSdcardFile(DATA_FILE_URI, MD5data, false);
+                        EncryptTool.setKey(password);//更新秘钥
+                        AccountGroupAdapter.updateAccountToFile();
+                        ok();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -82,15 +70,14 @@ public class LoginDialog {
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.exit(0);
+                dialog.dismiss();
             }
         });
         dialog.setCanceledOnTouchOutside(false);
         dialog.show();
     }
 
-    private void ok(String password) {
-        EncryptTool.setKey(password);
+    private void ok() {
         Message msg = new Message();
         Bundle data = new Bundle();
         data.putString("state", "ok");
