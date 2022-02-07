@@ -23,16 +23,16 @@ description: android 个人密码管理器
 
    <img src="img\image-20220207161549749.png" alt="image-20220207161549749" style="zoom:80%;" /><img src="img\image-20220207161630730.png" alt="image-20220207161630730" style="zoom:80%;" />
 
-   ![image-20220207161830683](img\image-20220207161830683.png)
+   <img src="img\image-20220207161830683.png" alt="image-20220207161830683" style="zoom:80%;" />
 
    
 
 4. 首页菜单支持用户名关键字搜索，命中搜索结果后提示该账号所属分组
 
-![image-20220207161915969](img\image-20220207161915969.png)
+<img src="img\image-20220207161915969.png" alt="image-20220207161915969" style="zoom:80%;" />
 
 数据迁移：
 
 ​		密码账号数据存储在 /storage/emulated/0/shield 目录下，换新机时只需要把shield 目录复制到新的手机上，之后安装软件后直接打卡即可
 
-![image-20220207161952795](img\image-20220207161952795.png)
+<img src="img\image-20220207161952795.png" alt="image-20220207161952795" style="zoom:80%;" />
